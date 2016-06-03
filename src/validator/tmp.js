@@ -42,6 +42,7 @@ function Nulla<T>(f:(fv:mixed)=>T):(nv:mixed)=>?T {
   };
 }
 
+// this is check some field should not be defined
 function MkUndefined<T>(f:TypeCaster<T>):(v:mixed) => void {
   return function(v:mixed):void {
     if (typeof v === 'undefined') {return undefined;}
