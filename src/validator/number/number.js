@@ -53,17 +53,19 @@ function mk_clip<T>(isType:TypeCaster<T>, addeMsg:string):ClipFn<T> {
 // internal helper function ..
 function testRange(v:number, range:NumberRange):boolean {
   const { min, max, intervals} = range;
+  const hasMin = (min!=null); //javascript's ?: treat 0 as false
+  const hasMax = (max!=null);
   switch (intervals) {
   case '[]':
-    return (min? v>=min :true) && (max? v<=max :true);
+    return (hasMin? v>=min :true) && (hasMax? v<=max :true);
     // seems the express above could not be resolved by flow.
     // return (min || v>=min) && (max || v<= max);
   case '[)':
-    return (min? v>=min :true) && (max? v<max :true);
+    return (hasMin? v>=min :true) && (hasMax? v<max :true);
   case '(]':
-    return (min? v>min :true) && (max? v<=max :true);
+    return (hasMin? v>min :true) && (hasMax? v<=max :true);
   case '()':
-    return (min? v>min :true) && (max? v<max :true);
+    return (hasMin? v>min :true) && (hasMax? v<max :true);
   default:
     throw new RunTimeCheckE('The range.intervals must be ' +
     ' [] | [) | (] | () .Please check the passed in' +
