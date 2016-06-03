@@ -9,8 +9,6 @@ import * as undef from './undef.js';
 import * as union from './union.js';
 import * as number from './number/number.js';
 import type {NumberRange, InRangeFn, ClipFn} from './number/number.js';
-import * as _int from './number/int.js';
-import * as _float from './number/float.js';
 
 import * as _string from './string/string.js';
 
@@ -24,16 +22,12 @@ const pro = {
   union:union.union,
 
   isNumber:number.isNumber, // has isNumber.inRange
-  isInt:_int.isInt, // isInt.inRange
-  isFloat:_float.isFloat, // isFloat.inRange
 
   isString:_string.isString
 };
 
 const cvt = {
-  isNumber:number.cvt,
-  isInt:_int.cvt,
-  isFloat:_float.cvt
+  isNumber:number.cvt
 };
 
 let dev = pro;

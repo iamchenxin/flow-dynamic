@@ -3,8 +3,9 @@
 */
 
 import {RunTimeCheckE, ePrint} from '../../definition/def.js';
-import {isNumber, mk_inRange, mk_clip} from './number.js';
-import type { InRangeFn, ClipFn} from './number.js';
+import {isNumber} from './number.js';
+import {mk_inRange, mk_clip} from './helper.js';
+import type { InRangeFn, ClipFn} from './helper.js';
 
 function isInt(_v:mixed, eMsg?:string):number {
   const v = isNumber(_v);
