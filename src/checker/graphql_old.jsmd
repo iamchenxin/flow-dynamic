@@ -1,0 +1,132 @@
+
+
+import {RunTimeCheckE, ePrint} from '../definition/def.js';
+import type { TypeCaster} from '../definition/def.js';
+import type {
+  GraphQLResolveInfo
+} from 'flow-graphql';
+
+type DynamicCheckResolver = (source:mixed, args:{[key:string]:any},
+    context:mixed, info?:GraphQLResolveInfo) => mixed;
+
+
+function any_caster<T>(v:T):any {
+  return v;
+}
+// dynamic Caster
+function dynamicCheck<SourceT, ArgsT, CxtT >(
+  resolver:(source:SourceT, args:ArgsT,
+    context:CxtT, info?:GraphQLResolveInfo) => mixed,
+  sourceCaster?:TypeCaster<SourceT>,
+  argsCaster?:TypeCaster<ArgsT>,
+  contextCaster?:TypeCaster<CxtT>
+):DynamicCheckResolver  {
+  function dynamicResoler(_source:mixed, _args:{[key:string]:mixed },
+    _context:mixed, info?:GraphQLResolveInfo):mixed {
+    try {
+      const source = sourceCaster(_source);
+      if ( argsCaster ) {
+        const args = argsCaster(_args);
+        if ( contextCaster ) {
+          const context = contextCaster(_context);
+          return resolver(source, args, context, info);
+        }
+        return resolver(source, args, any_caster(_context), info);
+      }
+      return resolver(source, any_caster(_args), any_caster(_context), info);
+
+    } catch (e) {
+      let msg = `Dynamic Check failed!\n${e}\n` +
+        `with data:\n ${ePrint(_source)}`;
+      throw new RunTimeCheckE(msg);
+    }
+  }
+  return dynamicResoler;
+}
+
+function check<SourceT, ArgsT, CxtT >(
+  checkedResolver:(
+    source:SourceT, args:ArgsT,
+    context:CxtT, info?:GraphQLResolveInfo) => mixed,
+  sourceCaster:TypeCaster<SourceT>,
+  argsCaster?:TypeCaster<ArgsT>,
+  contextCaster?:TypeCaster<CxtT>
+) {
+  function graphqlResolver(
+      _source:mixed, _args:{[key:string]:mixed},
+      _context:mixed, _info?:GraphQLResolveInfo
+    ):mixed {
+
+    try{
+      const source = sourceCaster?sourceCaster(_source):any_caster(_source);
+      const args = argsCaster?argsCaster(_args):any_caster(_args);
+      const context = contextCaster?contextCaster(_context):any_caster(_context);
+      return checkedResolver(source, args, context, info);
+    } catch (e) {
+      let msg = `Dynamic Check failed!\n${e}\n` +
+        `with data:\n ${ePrint(_source)}`;
+      throw new RunTimeCheckE(msg);
+    }
+  }
+}
+
+export {
+  dynamicCheck
+};
+
+export type {
+  DynamicCheckResolver,
+  Caster
+};
+//------------------
+// some thought
+// simulate overload, to get faster ???
+function argsCheck<ArgsT>(
+  argsCaster:Caster<ArgsT>,
+  resolver:(source:mixed, args:ArgsT,
+    context:mixed, info?:GraphQLResolveInfo) => mixed,
+):DynamicCheckResolver {
+  const dResoler:DynamicCheckResolver =
+    function(_source, _args, _context, info) {
+      try {
+        const args = argsCaster(_args);
+        return resolver(_source, args, _context, info);
+      } catch (e) {
+        let msg = `Dynamic Check failed!\n${e}\n` +
+          `with args:\n ${ePrint(_args)}`;
+        throw new RunTimeCheckE(msg);
+      }
+    };
+  return dResoler;
+}
+
+// dev.argsCheck -> develop check only
+let dev ={
+  argsCheck:argsCheck
+};
+// if no dev, just return the custom resolver,user passed in.
+if (process.env.NODE_ENV != 'dev') {
+  function unCheck<ArgsT>(
+    argsCaster:Caster<ArgsT>,
+    resolver:(source:mixed, args:ArgsT,
+      context:mixed, info?:GraphQLResolveInfo) => mixed,
+  ):DynamicCheckResolver {
+    return (resolver:any);
+  }
+  dev.argsCheck = function<ArgsT>(
+    argsCaster:Caster<ArgsT>,
+    resolver:(source:mixed, args:ArgsT,
+      context:mixed, info?:GraphQLResolveInfo) => mixed,
+  ):DynamicCheckResolver {
+    return (resolver:any);
+  };
+}
+
+/*
+function customChecker(v:mixed):string {
+  const str = isString(v); // the corresponding flow type
+  // ... user code ...
+  // check failed -> throw
+  // check pass -> return str
+}
+*/
