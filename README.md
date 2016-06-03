@@ -1,2 +1,2 @@
-## Graphql-Flow
-A bridge connect between runtime check and static flow check.
+## Flow-Dynamic
+A helper library link runtime check to static flow check.
