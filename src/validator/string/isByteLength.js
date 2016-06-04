@@ -10,7 +10,7 @@ type OPTIONS = {
   max?:number
 };
 /* eslint-disable prefer-rest-params */
-export default function isByteLength(_mix_str:mixed, options:OPTIONS):string {
+function isByteLength(_mix_str:mixed, options:OPTIONS):string {
   const str = isString(_mix_str);
   if ( byteLength(str, options) ) {
     return str;
@@ -25,3 +25,8 @@ function byteLength(str:string, options:OPTIONS):boolean {
   const len = encodeURI(str).split(/%..|./).length - 1;
   return len >= min && (typeof max === 'undefined' || len <= max);
 }
+
+export {
+  isByteLength,
+  byteLength
+};

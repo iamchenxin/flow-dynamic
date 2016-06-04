@@ -1,10 +1,15 @@
-import assertString from './util/assertString';
-
+import {isString} from './string.js';
+import {RunTimeCheckE, ePrint} from '../../definition/def.js';
 import merge from './util/merge';
-import isByteLength from './isByteLength';
-import isFQDN from './isFQDN';
+import {byteLength} from './isByteLength';
+import {testFDQN} from './isFQDN';
 
-const default_email_options = {
+type EMAIL_OPTIONS = {
+  allow_display_name: boolean,
+  allow_utf8_local_part: boolean,
+  require_tld: boolean,
+};
+const default_email_options:EMAIL_OPTIONS = {
   allow_display_name: false,
   allow_utf8_local_part: true,
   require_tld: true,
@@ -20,8 +25,9 @@ const quotedEmailUserUtf8 = /^([\s\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5
 /* eslint-enable max-len */
 /* eslint-enable no-control-regex */
 
-export default function isEmail(str, options) {
-  assertString(str);
+function isEmail(_str:string, options:EMAIL_OPTIONS):string {
+  const oristr = isString(_str);
+  let str:string = oristr;
   options = merge(options, default_email_options);
 
   if (options.allow_display_name) {
@@ -40,13 +46,13 @@ export default function isEmail(str, options) {
     user = user.replace(/\./g, '').toLowerCase();
   }
 
-  if (!isByteLength(user, { max: 64 }) ||
-            !isByteLength(domain, { max: 256 })) {
-    return false;
+  if (!byteLength(user, { max: 64 }) ||
+            !byteLength(domain, { max: 256 })) {
+    throw new RunTimeCheckE(`value(${ePrint(_str)}) is not a email.`);
   }
 
-  if (!isFQDN(domain, { require_tld: options.require_tld })) {
-    return false;
+  if (!testFDQN(domain, { require_tld: options.require_tld })) {
+    throw new RunTimeCheckE(`value(${ePrint(_str)}) is not a email.`);
   }
 
   if (user[0] === '"') {
@@ -62,9 +68,18 @@ export default function isEmail(str, options) {
   const user_parts = user.split('.');
   for (let i = 0; i < user_parts.length; i++) {
     if (!pattern.test(user_parts[i])) {
-      return false;
+      throw new RunTimeCheckE(`value(${ePrint(_str)}) is not a email.`);
     }
   }
 
-  return true;
+  return oristr;
 }
+
+const dev = {
+  isEmail:(v:any, op:any) => v
+};
+
+export {
+  isEmail,
+  dev
+};

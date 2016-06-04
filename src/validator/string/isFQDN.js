@@ -3,7 +3,7 @@
  */
 
 import {isString} from './string.js';
-import {RunTimeCheckE} from '../../definition/def.js';
+import {RunTimeCheckE, ePrint} from '../../definition/def.js';
 import merge from './util/merge';
 
 type FQDN_OPTIONS = {
@@ -17,9 +17,15 @@ const default_fqdn_options:FQDN_OPTIONS = {
   allow_trailing_dot: false,
 };
 
-export default function isFDQN(_mix_str:mixed, options:FQDN_OPTIONS):string {
-  const _str = isString(_mix_str);
-  let str = _str;
+function isFDQN(_str:string, options:FQDN_OPTIONS):string {
+  const str = isString(_str);
+  if ( testFDQN(str, options) ) {
+    return str;
+  }
+  throw new RunTimeCheckE(`value(${ePrint(_str)}) is not FDQN.`);
+}
+
+function testFDQN(str:string, options:FQDN_OPTIONS):boolean {
   options = merge(options, default_fqdn_options);
 
     /* Remove the optional trailing dot before checking validity */
@@ -30,7 +36,7 @@ export default function isFDQN(_mix_str:mixed, options:FQDN_OPTIONS):string {
   if (options.require_tld) {
     const tld = parts.pop();
     if (!parts.length || !/^([a-z\u00a1-\uffff]{2,}|xn[a-z0-9-]{2,})$/i.test(tld)) {
-      throw new RunTimeCheckE(`(${str}) is not FDQN`);
+      return false;
     }
   }
   for (let part, i = 0; i < parts.length; i++) {
@@ -39,15 +45,20 @@ export default function isFDQN(_mix_str:mixed, options:FQDN_OPTIONS):string {
       part = part.replace(/_/g, '');
     }
     if (!/^[a-z\u00a1-\uffff0-9-]+$/i.test(part)) {
-      throw new RunTimeCheckE(`(${str}) is not FDQN`);
+      return false;
     }
     if (/[\uff01-\uff5e]/.test(part)) {
           // disallow full-width chars
-      throw new RunTimeCheckE(`(${str}) is not FDQN`);
+      return false;
     }
     if (part[0] === '-' || part[part.length - 1] === '-') {
-      throw new RunTimeCheckE(`(${str}) is not FDQN`);
+      return false;
     }
   }
-  return _str;
+  return true;
 }
+
+export {
+  isFDQN,
+  testFDQN
+};

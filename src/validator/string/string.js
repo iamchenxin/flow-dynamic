@@ -4,6 +4,10 @@
 
 import {RunTimeCheckE, ePrint} from '../../definition/def.js';
 import {isAscii} from './isAscii.js';
+import {
+  isEmail,
+  dev as EmDev
+} from './isEmail.js';
 
 function isString(v:mixed):string {
   if (typeof v !== 'string') {
@@ -14,12 +18,11 @@ function isString(v:mixed):string {
 }
 
 isString.isAscii = isAscii;
-function _copy(v:mixed):any {
-  return v;
-}
-function _copy2(v:mixed):any {
-  return v;
-}
-_copy.isAscii = _copy2;
-const dev = _copy;
+isString.isEmail = isEmail;
+
+const dev = {
+  isString: (v:any) => v
+};
+dev.isString.isEmail = EmDev.isEmail;
+dev.isString.isAscii = (v:any) => v;
 export {isString, dev};
