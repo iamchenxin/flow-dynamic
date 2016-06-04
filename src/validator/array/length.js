@@ -15,8 +15,8 @@ function mk_length<T>(arrFn:(v:any)=>Array<T>)
     if ( testRange(length, range)) {
       return arr;
     } else {
-      throw new RunTimeCheckE(`Array.length(${length}) is out ` +
-      `Range:\n${ePrint(range)}`);
+      throw new RunTimeCheckE(`Array(${ePrint(_v)})length(${length}) ` +
+      `is out Range:\n${ePrint(range)}`);
     }
   }
 }
