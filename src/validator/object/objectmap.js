@@ -6,7 +6,7 @@ import {RunTimeCheckE, ePrint} from '../../definition/def.js';
 import {isObject} from './object.js';
 
 function isStringMap(_v:any):{[key:string]:string} {
-  const v = isObject(v);
+  const v = isObject(_v);
   for (var key in v) {
     if ( typeof v[key] !== 'string') {
       throw new RunTimeCheckE(`This Object:\n${ePrint(v)}\n` +
@@ -17,7 +17,7 @@ function isStringMap(_v:any):{[key:string]:string} {
 }
 
 function isNumberMap(_v:any):{[key:string]:number} {
-  const v = isObject(v);
+  const v = isObject(_v);
   for (var key in v) {
     if ( typeof v[key] !== 'number') {
       throw new RunTimeCheckE(`This Object:\n${ePrint(v)}\n` +
@@ -28,7 +28,7 @@ function isNumberMap(_v:any):{[key:string]:number} {
 }
 
 function isMapOf<T>(_v:any, _class:Class<T>):{[key:string]:number} {
-  const v = isObject(v);
+  const v = isObject(_v);
   for (var key in v) {
     if ( (v[key] instanceof _class) !== true ) {
       throw new RunTimeCheckE(`This Object:\n${ePrint(v)}\n` +
@@ -39,9 +39,9 @@ function isMapOf<T>(_v:any, _class:Class<T>):{[key:string]:number} {
 }
 
 const dev = {
-  isStringMap: (v:any)=>v,
-  isNumberMap: (v:any)=>v,
-  isMapOf: (v:any, c:any)=>v,
+  isStringMap: (v:any) => v,
+  isNumberMap: (v:any) => v,
+  isMapOf: (v:any, c:any) => v,
 };
 export {
   isStringMap,

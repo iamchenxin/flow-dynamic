@@ -51,3 +51,6 @@ type A = {
   }
 }
 // [key:string]:mixed, does not make sense! since the  type A is a known type!!!!
+
+--------
+ make dev to dev() in top index.js ? to void unresolved global var in circle ref modules

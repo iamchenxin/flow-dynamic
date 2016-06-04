@@ -12,7 +12,12 @@ import {
 
 function isObject(v:mixed):Object {
   if (v instanceof Object) {
-    return v;
+    if (Array.isArray(v)) {
+      throw new RunTimeCheckE(`value:(${ePrint(v)}) is a Array ` +
+      'not a Object.(This is stricted by Flow!)');
+    }
+    const ob:Object = v;
+    return ob;
   }
   throw new RunTimeCheckE(`value:(${ePrint(v)}) is not a Object.`);
 }
