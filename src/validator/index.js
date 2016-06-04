@@ -50,11 +50,11 @@ if (process.env.NODE_ENV != 'dev') {
     isInt:_copy, // isInt.inRange
     isFloat:_copy, // isFloat.inRange
 
-    isString:_string.dev,
-    isArray:_array.dev,
-    isObject:_object.dev
+    ..._string.dev,
+    ..._array.dev,
+    ..._object.dev
   };
-
+  
   function _copy(v:mixed):any {
     return v;
   }
