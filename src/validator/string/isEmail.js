@@ -1,3 +1,6 @@
+/* @flow
+ *
+ */
 import {isString} from './string.js';
 import {RunTimeCheckE, ePrint} from '../../definition/def.js';
 import merge from './util/merge';
@@ -5,9 +8,9 @@ import {byteLength} from './isByteLength';
 import {testFDQN} from './isFQDN';
 
 type EMAIL_OPTIONS = {
-  allow_display_name: boolean,
-  allow_utf8_local_part: boolean,
-  require_tld: boolean,
+  allow_display_name?: boolean,
+  allow_utf8_local_part?: boolean,
+  require_tld?: boolean,
 };
 const default_email_options:EMAIL_OPTIONS = {
   allow_display_name: false,
@@ -25,7 +28,7 @@ const quotedEmailUserUtf8 = /^([\s\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5
 /* eslint-enable max-len */
 /* eslint-enable no-control-regex */
 
-function isEmail(_str:string, options:EMAIL_OPTIONS):string {
+function isEmail(_str:string, options?:EMAIL_OPTIONS):string {
   const oristr = isString(_str);
   let str:string = oristr;
   options = merge(options, default_email_options);
@@ -57,9 +60,14 @@ function isEmail(_str:string, options:EMAIL_OPTIONS):string {
 
   if (user[0] === '"') {
     user = user.slice(1, user.length - 1);
-    return options.allow_utf8_local_part ?
+    const stat = options.allow_utf8_local_part ?
             quotedEmailUserUtf8.test(user) :
             quotedEmailUser.test(user);
+    if ( stat ) {
+      return oristr;
+    } else {
+      throw new RunTimeCheckE(`value(${ePrint(_str)}) is not a email.`);
+    }
   }
 
   const pattern = options.allow_utf8_local_part ?
@@ -75,8 +83,9 @@ function isEmail(_str:string, options:EMAIL_OPTIONS):string {
   return oristr;
 }
 
+const _copy = (v:any, op:any) => v;
 const dev = {
-  isEmail:(v:any, op:any) => v
+  isEmail:_copy
 };
 
 export {

@@ -21,8 +21,10 @@ isString.isAscii = isAscii;
 isString.isEmail = isEmail;
 
 const dev = {
-  isString: (v:any) => v
+  isString(v:any):any {
+    return v;
+  }
 };
-dev.isString.isEmail = EmDev.isEmail;
+dev.isString.isEmail = (v:any) => v;
 dev.isString.isAscii = (v:any) => v;
 export {isString, dev};

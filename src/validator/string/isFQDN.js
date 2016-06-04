@@ -7,9 +7,9 @@ import {RunTimeCheckE, ePrint} from '../../definition/def.js';
 import merge from './util/merge';
 
 type FQDN_OPTIONS = {
-  require_tld: boolean,
-  allow_underscores: boolean,
-  allow_trailing_dot: boolean,
+  require_tld?: boolean,
+  allow_underscores?: boolean,
+  allow_trailing_dot?: boolean,
 };
 const default_fqdn_options:FQDN_OPTIONS = {
   require_tld: true,
@@ -25,7 +25,7 @@ function isFDQN(_str:string, options:FQDN_OPTIONS):string {
   throw new RunTimeCheckE(`value(${ePrint(_str)}) is not FDQN.`);
 }
 
-function testFDQN(str:string, options:FQDN_OPTIONS):boolean {
+function testFDQN(str:string, options?:FQDN_OPTIONS):boolean {
   options = merge(options, default_fqdn_options);
 
     /* Remove the optional trailing dot before checking validity */
