@@ -56,7 +56,6 @@ function rmdir(pathNames) {
       fs.rmdirSync(pathName);
     }
   });
-
   function rmfile(name) {
     fs.unlinkSync(name);
   }

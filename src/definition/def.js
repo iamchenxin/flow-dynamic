@@ -20,9 +20,9 @@ function ePrint(v:mixed):string {
     { showHidden: true, depth: null });
 }
 
-type TypeCaster<T> = (v:mixed) => T;
-type ComplexCaster<T> = (source:mixed, args:{[key:string]:mixed}
-  , context:mixed) => T;
+type TypeCaster<T> = (v:any) => T;
+type ComplexCaster<T> = (source:any, args:{[key:string]:any}
+  , context:any) => T;
 
 
 export {

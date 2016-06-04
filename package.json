@@ -1,15 +1,25 @@
 {
   "name": "flow-dynamic",
-  "version": "0.0.1",
+  "version": "0.0.6",
   "description": "A helper library link runtime type check to static flow check.",
-  "main": "index.js",
+  "main": "./lib/index.js",
+  "directories": {
+  "lib": "./lib"
+  },
+  "files": [
+    "lib",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "test": "npm run jest",
     "jest": "NODE_ENV=test jest $@",
     "lint": "node_modules/.bin/eslint .",
     "lint2": "node_modules/eslint/bin/eslint.js .",
     "bnode": "NODE_ENV=dev babel-node",
-    "check": "flow check"
+    "check": "flow check",
+    "build": "gulp clean && gulp build ",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -26,6 +36,9 @@
     "url": "https://github.com/iamchenxin/flow-dynamic/issues"
   },
   "homepage": "https://github.com/iamchenxin/flow-dynamic#readme",
+  "peerDependencies": {
+    "flow-graphql": "^0.6.4"
+  },
   "devDependencies": {
     "babel-cli": "^6.9.0",
     "babel-core": "^6.9.1",

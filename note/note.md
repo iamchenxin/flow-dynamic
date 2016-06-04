@@ -24,4 +24,30 @@ a flow type.
   may be add a new checker name `complexCheck`? which called `argsCheck(source,args,context)` inside, instead of normal `argsCheck(args)`
 
 -------------
- ?? should allow 0 to be a valid default isFloat.clip default value?
+ ?? should allow 0 to be a valid default isFloat.clip default value? (nope! use number instead)
+
+-------------------
+  * to check a part of Object (but want use the whole object).
+
+type A = {
+  sub:{
+    a:number,
+    b:number
+  }
+}
+// -> could express as this.
+type A = {
+  sub:{
+    [key:string]:mixed,
+    b:number
+  }
+}
+// but ! it seems should not checked like this! in graphql upstream's data type is known.
+so ! if want use  sub, and sub.b ! should check the whole sub!
+type A = {
+  sub:{
+    a:number,
+    b:number
+  }
+}
+// [key:string]:mixed, does not make sense! since the  type A is a known type!!!!

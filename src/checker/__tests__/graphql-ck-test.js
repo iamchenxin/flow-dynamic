@@ -2,7 +2,7 @@
 *
 */
 
-jest.unmock('../graphql.js');
+jest.unmock('../graphql-ck.js');
 jest.unmock('../../definition/def.js');
 jest.unmock('../../validator/index.js');
 
@@ -12,12 +12,10 @@ import {
   argsCheck,
   complexCheck,
   dev as gdev
-} from '../graphql.js';
+} from '../graphql-ck.js';
 import {RunTimeCheckE, ePrint} from '../../definition/def.js';
 import {
   pro,
-  dev,
-  cvt
 } from '../../validator/index.js';
 
 type CheckedSrc = {
@@ -71,7 +69,7 @@ describe('test check()', () => {
     src = {
       id:'123',
       name:'tom',
-      age:-28
+      age:28
     };
     args = {
       id: 'aaa',
@@ -96,17 +94,36 @@ describe('test check()', () => {
     }).toThrow(new RunTimeCheckE(msg));
   });
   it('can valid partial ', () => {
-    console.log(ePrint(pro.isNumber));
     const resolver = check(
       (src) => ({
-        age:pro.isNumber.inRange(src.age, {min:0, intervals:'(]'})
+        age:pro.isNumber.isInt.inRange(src.age, {min:0, intervals:'(]'})
       }), null, null,
       (source:{age:number}) => {
-        console.log(ePrint(source));
+        return source.age;
+      });
+    src.age = -28;
+
+    let msg = '\nRunTimeCheckE: value(-28) is not in Range: { min: 0, intervals: \'(]\' }\n' +
+      `Source:\n${ePrint(src)}\n` +
+      `Args:\n${ePrint(args)}\n` +
+      `Context:\n${ePrint(context)}\n`;
+    expect(() => {
+      resolver(src, args, context);
+    }).toThrow(new RunTimeCheckE(msg));
+  });
+
+  it('check data sequentially, isNumber -> isFloat -> inRange  ', () => {
+    src.age = -28; // given src is not a float, then not in range.
+    // so isFloat will throw.
+    const resolver = check(
+      (src) => ({
+        age:pro.isNumber.isFloat.inRange(src.age, {min:0, intervals:'(]'})
+      }), null, null,
+      (source:{age:number}) => {
         return source.age;
       });
 
-    let msg = '\nRunTimeCheckE: value:(8888) should be string.\n' +
+    let msg = '\nRunTimeCheckE: value:(-28) is not a float\n' +
       `Source:\n${ePrint(src)}\n` +
       `Args:\n${ePrint(args)}\n` +
       `Context:\n${ePrint(context)}\n`;
