@@ -39,9 +39,9 @@ function isMapOf<T>(_v:any, _class:Class<T>):{[key:string]:number} {
 }
 
 const dev = {
-  isStringMap: (v:any) => v,
-  isNumberMap: (v:any) => v,
-  isMapOf: (v:any, c:any) => v,
+  isStringMap: (v:any):any => v,
+  isNumberMap: (v:any):any => v,
+  isMapOf: (v:any, c:any):any => v,
 };
 export {
   isStringMap,

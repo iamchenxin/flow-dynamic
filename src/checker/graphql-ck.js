@@ -20,7 +20,7 @@ function check<SourceT, ArgsT, CxtT >(
   sourceCaster:?TypeCaster<SourceT>,
   argsCaster:?TypeCaster<ArgsT>,
   contextCaster:?TypeCaster<CxtT>,
-  checkedResolver:(
+  resolverToCheck:(
     source:SourceT, args:ArgsT,
     context:CxtT, info:GraphQLResolveInfo
   ) => mixed
@@ -36,7 +36,7 @@ function check<SourceT, ArgsT, CxtT >(
       const source = sourceCaster?sourceCaster(_source):any_caster(_source);
       const args = argsCaster?argsCaster(_args):any_caster(_args);
       const context = contextCaster?contextCaster(_context):any_caster(_context);
-      return checkedResolver(source, args, context, _info);
+      return resolverToCheck(source, args, context, _info);
     } catch (e) {
       let msg = `\n${e}\n` +
         `Source:\n${ePrint(_source)}\n` +
@@ -50,7 +50,7 @@ function check<SourceT, ArgsT, CxtT >(
 // Source Check Only
 function sourceCheck<SourceT>(
   sourceCaster: TypeCaster<SourceT>,
-  checkedResolver:(
+  resolverToCheck:(
     source:SourceT, args:{[key:string]:mixed},
     context:mixed, info:GraphQLResolveInfo
   ) => mixed
@@ -63,7 +63,7 @@ function sourceCheck<SourceT>(
   ):mixed {
     try {
       const source = sourceCaster(_source);
-      return checkedResolver(source, _args, _context, _info);
+      return resolverToCheck(source, _args, _context, _info);
     } catch (e) {
       const msg = `\n${e}\n` +
         `Source:\n${ePrint(_source)}\n`;
@@ -75,7 +75,7 @@ function sourceCheck<SourceT>(
 // args Check Only
 function argsCheck<ArgsT>(
   argsCaster: TypeCaster<ArgsT>,
-  checkedResolver:(
+  resolverToCheck:(
     source:mixed, args:ArgsT,
     context:mixed, info:GraphQLResolveInfo
   ) => mixed
@@ -88,7 +88,7 @@ function argsCheck<ArgsT>(
   ):mixed {
     try {
       const args = argsCaster(_args);
-      return checkedResolver(_source, args, _context, _info);
+      return resolverToCheck(_source, args, _context, _info);
     } catch (e) {
       const msg = `\n${e}\n` +
         `Args:\n${ePrint(_args)}\n`;
@@ -103,7 +103,7 @@ function complexCheck<SourceT, ArgsT, CxtT >(
   sourceCaster:?ComplexCaster<SourceT>,
   argsCaster:?ComplexCaster<ArgsT>,
   contextCaster:?ComplexCaster<CxtT>,
-  checkedResolver:(
+  resolverToCheck:(
     source:SourceT, args:ArgsT,
     context:CxtT, info:GraphQLResolveInfo
   ) => mixed
@@ -125,7 +125,7 @@ function complexCheck<SourceT, ArgsT, CxtT >(
       const context = contextCaster?
         contextCaster(_source, _args, _context):
         any_caster(_context);
-      return checkedResolver(source, args, context, _info);
+      return resolverToCheck(source, args, context, _info);
     } catch (e) {
       let msg = `\n${e}\n` +
         `Source:\n${ePrint(_source)}\n` +
@@ -142,37 +142,37 @@ const dev = {
   argsCheck,
   complexCheck
 };
-// if no dev, just return the checkedResolver,do not check.
+// if no dev, just return the resolverToCheck,do not check.
 if (process.env.NODE_ENV != 'dev') {
 
   dev.check = function(
     sourceCaster:any,
     argsCaster:any,
     contextCaster:any,
-    checkedResolver:(
+    resolverToCheck:(
       source:any, args:any,
       context:any, info:GraphQLResolveInfo
     ) => mixed
   ):GraphQLResolver {
-    return (checkedResolver:any);
+    return (resolverToCheck:any);
   };
   dev.sourceCheck = function(
     sourceCaster:any,
-    checkedResolver:(
+    resolverToCheck:(
       source:any, args:any,
       context:any, info:GraphQLResolveInfo
     ) => mixed
   ):GraphQLResolver {
-    return (checkedResolver:any);
+    return (resolverToCheck:any);
   };
   dev.argsCheck = function(
     argsCaster:any,
-    checkedResolver:(
+    resolverToCheck:(
       source:any, args:any,
       context:any, info:GraphQLResolveInfo
     ) => mixed
   ):GraphQLResolver {
-    return (checkedResolver:any);
+    return (resolverToCheck:any);
   };
   dev.complexCheck = dev.check;
 }

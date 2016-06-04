@@ -25,6 +25,6 @@ const dev = {
     return v;
   }
 };
-dev.isString.isEmail = (v:any) => v;
-dev.isString.isAscii = (v:any) => v;
+dev.isString.isEmail = (v:any):any => v;
+dev.isString.isAscii = (v:any):any => v;
 export {isString, dev};

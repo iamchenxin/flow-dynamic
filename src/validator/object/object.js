@@ -27,7 +27,7 @@ isObject.isNumberMap = isNumberMap;
 isObject.isMapOf = isMapOf;
 
 const dev = {
-  isObject:(v:any) => v
+  isObject:(v:any):any => v
 };
 dev.isObject.isMapOf = omDev.isMapOf;
 dev.isObject.isStringMap = omDev.isStringMap;

@@ -26,7 +26,7 @@ isArray.isStrArr = isStrArr;
 isArray.isArrOf = isArrOf;
 
 const dev = {
-  isArray:(v:any) => v
+  isArray:(v:any):any => v
 };
 dev.isArray.isNumArr = taDev.isNumArr;
 dev.isArray.isStrArr = taDev.isStrArr;

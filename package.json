@@ -1,6 +1,6 @@
 {
   "name": "flow-dynamic",
-  "version": "0.0.6",
+  "version": "0.0.8",
   "description": "A helper library link runtime type check to static flow check.",
   "main": "./lib/index.js",
   "directories": {

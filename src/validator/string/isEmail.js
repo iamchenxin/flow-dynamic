@@ -83,7 +83,7 @@ function isEmail(_str:string, options?:EMAIL_OPTIONS):string {
   return oristr;
 }
 
-const _copy = (v:any, op:any) => v;
+const _copy = (v:any, op:any):any => v;
 const dev = {
   isEmail:_copy
 };

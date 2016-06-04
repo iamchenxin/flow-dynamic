@@ -52,14 +52,14 @@ isNumArr.inLength = mk_length(isNumArr);
 isStrArr.inLength = mk_length(isStrArr);
 isArrOf.inLength = mk_length_3args(isArrOf);
 
-const _copy1 = (v:any) => v;
+const _copy1 = (v:any):any => v;
 const dev = {
   isNumArr : _copy1,
   isStrArr : _copy1,
-  isArrOf : (v:any, c:any) => v
+  isArrOf : (v:any, c:any):any => v
 };
 
-const _copy2 = (v:any) => v;
+const _copy2 = (v:any):any => v;
 dev.isNumArr.inLength = _copy2;
 dev.isStrArr.inLength = _copy2;
 dev.isArrOf.inLength = _copy2;
