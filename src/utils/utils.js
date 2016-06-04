@@ -11,6 +11,7 @@ type Range = {
 };
 
 // internal helper function ..
+// default _intervals is '[]'
 function testRange(v:number, range:Range):boolean {
   const { min, max, intervals:_intervals} = range;
   const intervals = _intervals?_intervals:'[]';
