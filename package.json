@@ -17,7 +17,7 @@
     "lint": "node_modules/.bin/eslint .",
     "lint2": "node_modules/eslint/bin/eslint.js .",
     "bnode": "NODE_ENV=dev babel-node",
-    "check": "flow check",
+    "typecheck": "flow check",
     "build": "gulp clean && gulp build ",
     "prepublish": "npm run build"
   },
@@ -55,6 +55,7 @@
     "gulp-babel": "^6.1.2",
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.6.0",
-    "jest-cli": "^12.1.1"
+    "jest-cli": "^12.1.1",
+    "flow-bin": "^0.26.0"
   }
 }

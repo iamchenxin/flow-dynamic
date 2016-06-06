@@ -54,3 +54,6 @@ type A = {
 
 --------
  make dev to dev() in top index.js ? to void unresolved global var in circle ref modules
+
+ ---
+ test travis
