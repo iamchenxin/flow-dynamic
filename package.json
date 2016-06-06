@@ -51,14 +51,11 @@
     "eslint-plugin-flow-vars": "^0.4.0",
     "eslint-plugin-flowtype": "^2.2.7",
     "fbjs-scripts": "^0.7.1",
+    "flow-bin": "^0.26.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.6.0",
-    "jest-cli": "^12.1.1",
-    "flow-bin": "^0.26.0"
-  },
-  "dependencies": {
-    "flow-bin": "^0.26.0"
+    "jest-cli": "^12.1.1"
   }
 }
