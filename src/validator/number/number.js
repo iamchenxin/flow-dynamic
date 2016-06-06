@@ -3,7 +3,7 @@
 */
 
 import {RunTimeCheckE, ePrint} from '../../definition/def.js';
-import type {TypeCaster} from '../../definition/def.js';
+//import type {TypeCaster} from '../../definition/def.js';
 import {mk_inRange, mk_clip} from './helper.js';
 import type {NumberRange, InRangeFn, ClipFn} from './helper.js';
 

@@ -4,7 +4,7 @@
   "description": "A helper library link runtime type check to static flow check.",
   "main": "./lib/index.js",
   "directories": {
-  "lib": "./lib"
+    "lib": "./lib"
   },
   "files": [
     "lib",
@@ -56,6 +56,9 @@
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.6.0",
     "jest-cli": "^12.1.1",
+    "flow-bin": "^0.26.0"
+  },
+  "dependencies": {
     "flow-bin": "^0.26.0"
   }
 }
