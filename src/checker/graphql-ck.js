@@ -4,32 +4,29 @@
 
 import {RunTimeCheckE, ePrint} from '../definition/def.js';
 import type { TypeCaster, ComplexCaster} from '../definition/def.js';
-import type {
-  GraphQLResolveInfo
-} from 'flow-graphql';
 
-type GraphQLResolver = (source:mixed, args:{[key:string]:any},
-    context:mixed, info:GraphQLResolveInfo) => mixed;
+type GraphQLResolver<infoT> = (source:mixed, args:{[key:string]:any},
+    context:mixed, info:infoT) => mixed;
 
 function any_caster<T>(v:T):any {
   return v;
 }
 
 // standard check
-function check<SourceT, ArgsT, CxtT >(
+function check<SourceT, ArgsT, CxtT, infoT>(
   sourceCaster:?TypeCaster<SourceT>,
   argsCaster:?TypeCaster<ArgsT>,
   contextCaster:?TypeCaster<CxtT>,
   resolverToCheck:(
     source:SourceT, args:ArgsT,
-    context:CxtT, info:GraphQLResolveInfo
+    context:CxtT, info:infoT
   ) => mixed
-):GraphQLResolver {
+):GraphQLResolver<infoT> {
   return graphqlResolver;
 
   function graphqlResolver(
       _source:mixed, _args:{[key:string]:mixed},
-      _context:mixed, _info:GraphQLResolveInfo
+      _context:mixed, _info:infoT
     ):mixed {
 
     try {
@@ -48,18 +45,20 @@ function check<SourceT, ArgsT, CxtT >(
 }
 
 // Source Check Only
-function sourceCheck<SourceT>(
+// ToDo : should restrict resolverToCheck to resolverToCheck(source:SourceT,info:infoT) ?
+// not checked params should not be used ??? args, context should be removed?
+function sourceCheck<SourceT, infoT>(
   sourceCaster: TypeCaster<SourceT>,
   resolverToCheck:(
     source:SourceT, args:{[key:string]:mixed},
-    context:mixed, info:GraphQLResolveInfo
+    context:mixed, info:infoT
   ) => mixed
-):GraphQLResolver {
+):GraphQLResolver<infoT> {
   return graphqlResolver;
 
   function graphqlResolver(
     _source:mixed, _args:{[key:string]:mixed},
-    _context:mixed, _info:GraphQLResolveInfo
+    _context:mixed, _info:infoT
   ):mixed {
     try {
       const source = sourceCaster(_source);
@@ -73,18 +72,18 @@ function sourceCheck<SourceT>(
 }
 
 // args Check Only
-function argsCheck<ArgsT>(
+function argsCheck<ArgsT, infoT>(
   argsCaster: TypeCaster<ArgsT>,
   resolverToCheck:(
     source:mixed, args:ArgsT,
-    context:mixed, info:GraphQLResolveInfo
+    context:mixed, info:infoT
   ) => mixed
-):GraphQLResolver {
+):GraphQLResolver<infoT> {
   return graphqlResolver;
 
   function graphqlResolver(
     _source:mixed, _args:{[key:string]:mixed},
-    _context:mixed, _info:GraphQLResolveInfo
+    _context:mixed, _info:infoT
   ):mixed {
     try {
       const args = argsCaster(_args);
@@ -99,20 +98,20 @@ function argsCheck<ArgsT>(
 
 // complexCheck every caster receive (_source, _args, _context)
 // instead of only one
-function complexCheck<SourceT, ArgsT, CxtT >(
+function complexCheck<SourceT, ArgsT, CxtT, infoT>(
   sourceCaster:?ComplexCaster<SourceT>,
   argsCaster:?ComplexCaster<ArgsT>,
   contextCaster:?ComplexCaster<CxtT>,
   resolverToCheck:(
     source:SourceT, args:ArgsT,
-    context:CxtT, info:GraphQLResolveInfo
+    context:CxtT, info:infoT
   ) => mixed
-):GraphQLResolver {
+):GraphQLResolver<infoT> {
   return graphqlResolver;
 
   function graphqlResolver(
       _source:mixed, _args:{[key:string]:mixed},
-      _context:mixed, _info:GraphQLResolveInfo
+      _context:mixed, _info:infoT
     ):mixed {
 
     try {
@@ -151,27 +150,27 @@ if (process.env.NODE_ENV != 'dev') {
     contextCaster:any,
     resolverToCheck:(
       source:any, args:any,
-      context:any, info:GraphQLResolveInfo
+      context:any, info:any
     ) => mixed
-  ):GraphQLResolver {
+  ):GraphQLResolver<any> {
     return (resolverToCheck:any);
   };
   dev.sourceCheck = function(
     sourceCaster:any,
     resolverToCheck:(
       source:any, args:any,
-      context:any, info:GraphQLResolveInfo
+      context:any, info:any
     ) => mixed
-  ):GraphQLResolver {
+  ):GraphQLResolver<any> {
     return (resolverToCheck:any);
   };
   dev.argsCheck = function(
     argsCaster:any,
     resolverToCheck:(
       source:any, args:any,
-      context:any, info:GraphQLResolveInfo
+      context:any, info:any
     ) => mixed
-  ):GraphQLResolver {
+  ):GraphQLResolver<any> {
     return (resolverToCheck:any);
   };
   dev.complexCheck = dev.check;
