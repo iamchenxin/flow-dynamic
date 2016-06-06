@@ -13,6 +13,7 @@ import * as _array from './array/array.js';
 import type {NumberRange, InRangeFn, ClipFn} from './number/number.js';
 
 import * as _string from './string/string.js';
+import * as _literal from './literal.js';
 import {dev as dev_config} from './dev.js';
 
 const pro = {
@@ -23,6 +24,7 @@ const pro = {
   isUndef:undef.isUndef,
   undefable:undef.undefable,
   union:union.union,
+  isLiteral:_literal.isLiteral,
 
   isNumber:number.isNumber,
 
