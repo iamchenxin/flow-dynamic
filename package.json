@@ -1,6 +1,6 @@
 {
   "name": "flow-dynamic",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "A helper library link runtime type check to static flow check.",
   "main": "./lib/index.js",
   "directories": {
@@ -36,9 +36,6 @@
     "url": "https://github.com/iamchenxin/flow-dynamic/issues"
   },
   "homepage": "https://github.com/iamchenxin/flow-dynamic#readme",
-  "peerDependencies": {
-    "flow-graphql": "^0.6.4"
-  },
   "devDependencies": {
     "babel-cli": "^6.9.0",
     "babel-core": "^6.9.1",
@@ -54,7 +51,6 @@
     "eslint-plugin-flow-vars": "^0.4.0",
     "eslint-plugin-flowtype": "^2.2.7",
     "fbjs-scripts": "^0.7.1",
-    "flow-graphql": "^0.6.4",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-rename": "^1.2.2",

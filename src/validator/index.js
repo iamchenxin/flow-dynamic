@@ -13,6 +13,7 @@ import * as _array from './array/array.js';
 import type {NumberRange, InRangeFn, ClipFn} from './number/number.js';
 
 import * as _string from './string/string.js';
+import {dev as dev_config} from './dev.js';
 
 const pro = {
   isBoolean: boolean.isBoolean,
@@ -23,7 +24,7 @@ const pro = {
   undefable:undef.undefable,
   union:union.union,
 
-  isNumber:number.isNumber, // has isNumber.inRange
+  isNumber:number.isNumber,
 
   isString:_string.isString,
   isArray:_array.isArray,
@@ -33,36 +34,9 @@ const pro = {
 const cvt = {
   isNumber:number.cvt
 };
-
 let dev = pro;
 if (process.env.NODE_ENV != 'dev') {
-  _copy.inRange = _copy;
-  dev = {
-    isBoolean: _copy,
-    isInstanceof:_copy,
-    isNull:_copy,
-    nullable:returnCopy,
-    isUndef:_copy,
-    undefable:returnCopy,
-    union:returnCopy,
-
-    isNumber:_copy, // has isNumber.inRange
-    isInt:_copy, // isInt.inRange
-    isFloat:_copy, // isFloat.inRange
-
-    ..._string.dev,
-    ..._array.dev,
-    ..._object.dev
-  };
-  
-  function _copy(v:mixed):any {
-    return v;
-  }
-  function returnCopy():(v:mixed)=>any {
-    return function(v:mixed):any {
-      return v;
-    };
-  }
+  dev = dev_config;
 }
 
 export {
