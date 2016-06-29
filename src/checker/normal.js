@@ -23,7 +23,6 @@ function check1<Arg1>(
   function wrappedFn(
     _arg1:any, _arg2:any, _arg3:any
   ):mixed {
-
     try {
       const arg1 = caster1?caster1(_arg1):any_caster(_arg1);
       return oriFn(arg1, _arg2, _arg3);
@@ -33,6 +32,7 @@ function check1<Arg1>(
       throw new RunTimeCheckE(msg);
     }
   }
+
 }
 
 // standard check
@@ -48,7 +48,6 @@ function check2<Arg1, Arg2>(
   function wrappedFn(
     _arg1:any, _arg2:any, _arg3:any
   ):mixed {
-
     try {
       const arg1 = caster1?caster1(_arg1):any_caster(_arg1);
       const arg2 = caster2?caster2(_arg2):any_caster(_arg2);
@@ -60,6 +59,7 @@ function check2<Arg1, Arg2>(
       throw new RunTimeCheckE(msg);
     }
   }
+
 }
 
 // standard check
@@ -76,7 +76,6 @@ function check3<Arg1, Arg2, Arg3>(
   function wrappedFn(
     _arg1:any, _arg2:any, _arg3:any
   ):mixed {
-
     try {
       const arg1 = caster1?caster1(_arg1):any_caster(_arg1);
       const arg2 = caster2?caster2(_arg2):any_caster(_arg2);
@@ -90,6 +89,7 @@ function check3<Arg1, Arg2, Arg3>(
       throw new RunTimeCheckE(msg);
     }
   }
+  
 }
 
 const dev = {

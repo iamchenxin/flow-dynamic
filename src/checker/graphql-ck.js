@@ -113,7 +113,6 @@ function complexCheck<SourceT, ArgsT, CxtT, infoT>(
       _source:mixed, _args:{[key:string]:mixed},
       _context:mixed, _info:infoT
     ):mixed {
-
     try {
       const source = sourceCaster?
         sourceCaster(_source, _args, _context):
@@ -133,6 +132,7 @@ function complexCheck<SourceT, ArgsT, CxtT, infoT>(
       throw new RunTimeCheckE(msg);
     }
   }
+
 }
 
 const dev = {
@@ -143,7 +143,6 @@ const dev = {
 };
 // if no dev, just return the resolverToCheck,do not check.
 if (process.env.NODE_ENV != 'dev') {
-
   dev.check = function(
     sourceCaster:any,
     argsCaster:any,

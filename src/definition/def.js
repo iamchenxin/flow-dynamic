@@ -2,7 +2,6 @@
  *
  */
 
-// Error
 import {
   inspect
 } from 'util';
@@ -21,9 +20,8 @@ function ePrint(v:mixed):string {
 }
 
 type TypeCaster<T> = (v:any) => T;
-type ComplexCaster<T> = (source:any, args:{[key:string]:any}
-  , context:any) => T;
-
+type ComplexCaster<T> =
+  (source:any, args:{[key:string]:any}, context:any) => T;
 
 export {
   RunTimeCheckE,
