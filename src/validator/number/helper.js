@@ -13,10 +13,10 @@ type NumberRange = {
 };
 
 // internal helper function ..
-type InRangeFn<T> = (_v:mixed, range:NumberRange, eMsg?:string) => T;
-function mk_inRange<T>(isType:TypeCaster<T>):InRangeFn<T> {
+type InRangeFn = (_v:mixed, range:NumberRange, eMsg?:string) => number;
+function mk_inRange(isType:TypeCaster<number>):InRangeFn {
   return inRange;
-  function inRange(_v:mixed, range:NumberRange, eMsg?:string):T {
+  function inRange(_v:mixed, range:NumberRange, eMsg?:string):number {
     const v = isType(_v);
     if (range && testRange(v, range)) {
       return v;
@@ -29,10 +29,10 @@ function mk_inRange<T>(isType:TypeCaster<T>):InRangeFn<T> {
 }
 
 // internal helper function ..
-type ClipFn<T> = (_v:mixed, range:?NumberRange, _default:number) => T;
-function mk_clip<T>(isType:TypeCaster<T>, addeMsg:string):ClipFn<T> {
+type ClipFn = (_v:mixed, range:?NumberRange, _default:number) => number;
+function mk_clip(isType:TypeCaster<number>, addeMsg:string):ClipFn {
   return clip;
-  function clip(_v:mixed, range:?NumberRange, _default:T):T {
+  function clip(_v:mixed, range:?NumberRange, _default:number):number {
     const v = isType(_v);
     const defv = isType(_default, `The _default(${_default}) ` +
     addeMsg);

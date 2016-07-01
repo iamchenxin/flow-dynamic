@@ -16,9 +16,8 @@ function isInt(_v:mixed, eMsg?:string):number {
   throw new RunTimeCheckE(msg);
 }
 
-const inRange:InRangeFn<number> = mk_inRange(isInt);
-const clip:ClipFn<number> = mk_clip(isInt,
-  'passed in to clip() is not a integer');
+const inRange:InRangeFn = mk_inRange(isInt);
+const clip:ClipFn = mk_clip(isInt, 'passed in to clip() is not a integer');
 
 const cvt = {
   clip:clip

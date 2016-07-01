@@ -15,9 +15,8 @@ function isNumber(v:mixed, eMsg?:string):number {
   return v;
 }
 
-const inRange:InRangeFn<number> = mk_inRange(isNumber);
-const clip:ClipFn<number> = mk_clip(isNumber,
-  'passed in to clip() is not a number');
+const inRange:InRangeFn = mk_inRange(isNumber);
+const clip:ClipFn = mk_clip(isNumber, 'passed in to clip() is not a number');
 
 import * as _float from './float.js';
 import * as _int from './int.js';

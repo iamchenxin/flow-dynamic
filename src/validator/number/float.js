@@ -5,7 +5,7 @@
 import {RunTimeCheckE, ePrint} from '../../definition/def.js';
 import {isNumber} from './number.js';
 import {mk_inRange, mk_clip} from './helper.js';
-import type {NumberRange, InRangeFn, ClipFn} from './helper.js';
+import type {NumberRange, InRangeFn} from './helper.js';
 
 function isFloat(_v:mixed, eMsg?:string):number {
   const v = isNumber(_v);
@@ -16,7 +16,7 @@ function isFloat(_v:mixed, eMsg?:string):number {
   return v;
 }
 
-const inRange:InRangeFn<number> = mk_inRange(isFloat);
+const inRange:InRangeFn = mk_inRange(isFloat);
 //const clip:ClipFn<number> = mk_clip(isFloat,
 //  'passed in to clip() is not a float');
 const clip:(_v:mixed, range:?NumberRange, _default:number) => number
