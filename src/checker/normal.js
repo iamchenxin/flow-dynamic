@@ -79,7 +79,7 @@ function check3<Arg1, Arg2, Arg3>(
     try {
       const arg1 = caster1?caster1(_arg1):any_caster(_arg1);
       const arg2 = caster2?caster2(_arg2):any_caster(_arg2);
-      const arg3 = caster3?caster1(_arg3):any_caster(_arg3);
+      const arg3 = caster3?caster3(_arg3):any_caster(_arg3);
       return oriFn(arg1, arg2, arg3);
     } catch (e) {
       let msg = `\n${e}\n` +
@@ -89,7 +89,7 @@ function check3<Arg1, Arg2, Arg3>(
       throw new RunTimeCheckE(msg);
     }
   }
-  
+
 }
 
 const dev = {

@@ -6,6 +6,7 @@ import {RunTimeCheckE, ePrint} from '../../definition/def.js';
 import {testRange} from '../../utils/utils.js';
 import type {Range} from '../../utils/utils.js';
 
+// return a function inLength()
 function mk_length<T>(arrFn:(v:any)=>Array<T>)
 :(v:mixed, range:Range)=>Array<T> {
   return inLength;
@@ -24,7 +25,7 @@ function mk_length<T>(arrFn:(v:any)=>Array<T>)
 function mk_length_3args<T>(arrFn:(v:any, _class:Class<T>)=>Array<T>)
 :(_v:mixed, _class:Class<T>, range:Range) => Array<T> {
   return inLength;
-  function inLength<T>(_v:mixed, _class:Class<T>, range:Range)
+  function inLength(_v:mixed, _class:Class<T>, range:Range)
   :Array<T> {
     const arr = arrFn(_v, _class);
     const length = arr.length;
