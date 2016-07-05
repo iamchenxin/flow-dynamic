@@ -92,11 +92,13 @@ function check3<Arg1, Arg2, Arg3>(
 
 }
 
-const dev = {
+const pro = {
   check1,
   check2,
   check3
 };
+
+const dev = pro;
 // if no dev, just return the resolverToCheck,do not check.
 if (process.env.NODE_ENV != 'dev') {
   dev.check1 = function(
@@ -131,8 +133,6 @@ if (process.env.NODE_ENV != 'dev') {
 }
 
 export {
-  check1,
-  check2,
-  check3,
+  pro,
   dev
 };

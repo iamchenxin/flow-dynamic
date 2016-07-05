@@ -7,12 +7,9 @@ jest.unmock('../../definition/def.js');
 jest.unmock('../../validator/index.js');
 
 import {
-  check,
-  sourceCheck,
-  argsCheck,
-  complexCheck,
-  dev as gdev
+  pro as gpro
 } from '../graphql-ck.js';
+const {check} = gpro;
 import {RunTimeCheckE, ePrint} from '../../definition/def.js';
 import {
   pro,
@@ -23,7 +20,7 @@ type CheckedSrc = {
   name: string,
   age:number
 }
-const srcCaster = (source)=>({
+const srcCaster = (source) => ({
   id:pro.isString(source.id),
   name:pro.isString(source.name),
   age:pro.isNumber(source.age)
@@ -37,7 +34,7 @@ type CheckedArgs = {
     y:number
   }
 }
-const argsCaster = (args)=>({
+const argsCaster = (args) => ({
   id:pro.isString(args.id),
   name:pro.isString(args.name),
   position:{

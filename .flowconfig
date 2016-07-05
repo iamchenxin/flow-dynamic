@@ -1,5 +1,6 @@
 [ignore]
-.*/__tests__/.*
+.*/src/\(checker\|definition\|utils\|validator\)/__tests__/.*
+.*/src/validator/\(array\|number\|object\|string\)/__tests__/.*
 .*/__mocks__/.*
 .*/node_modules/fbjs/.*
 .*/lib/.*

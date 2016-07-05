@@ -175,11 +175,13 @@ if (process.env.NODE_ENV != 'dev') {
   dev.complexCheck = dev.check;
 }
 
-
-export {
+const pro = {
   check,
   sourceCheck,
   argsCheck,
-  complexCheck,
+  complexCheck
+};
+export {
+  pro,
   dev
 };
