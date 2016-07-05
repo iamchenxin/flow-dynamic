@@ -5,8 +5,7 @@
 import {RunTimeCheckE, ePrint} from '../../definition/def.js';
 import {isAscii} from './isAscii.js';
 import {
-  isEmail,
-  dev as EmDev
+  isEmail
 } from './isEmail.js';
 
 function isString(v:mixed):string {
@@ -20,6 +19,7 @@ function isString(v:mixed):string {
 isString.isAscii = isAscii;
 isString.isEmail = isEmail;
 
+// ToDo: Should remove dev here!,all dev config is in dev.js
 const dev = {
   isString(v:any):any {
     return v;

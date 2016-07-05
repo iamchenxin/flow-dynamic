@@ -19,20 +19,20 @@ import {
   dev as dev_gra
 } from './checker/graphql-ck.js';
 import {
-  pro as pro_nor,
-  dev as dev_nor
-} from './checker/normal.js';
+  pro as pro_std,
+  dev as dev_std
+} from './checker/standard.js';
 
 const pro = {
   ...pro_val,
   ...pro_gra,
-  ...pro_nor
+  ...pro_std
 };
 
 const dev = {
   ...dev_val,
   ...dev_gra,
-  ...dev_nor
+  ...dev_std
 };
 
 export {
