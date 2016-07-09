@@ -74,7 +74,7 @@ describe('Basic usage for graphql', () => {
     )).toEqual('tid!hello');
 
     const upE = new RunTimeCheckE('value:(undefined) should be string.');
-    const eMsg = `\n${upE}\n` +
+    const eMsg = `\n${upE.toString()}\n` +
       `Args:\n${ePrint({idd: 'tid'})}\n`;
     expect(() => {
       field.resolve(
