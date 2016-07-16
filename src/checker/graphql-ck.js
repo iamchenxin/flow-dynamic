@@ -5,8 +5,9 @@
 import {RunTimeCheckE, ePrint} from '../definition/def.js';
 import type { TypeCaster, ComplexCaster} from '../definition/def.js';
 
-type GraphQLResolver<infoT> = (source:mixed, args:{[key:string]:any},
-    context:mixed, info:infoT) => mixed;
+type GraphQLResolver<SourceT, infoT, ResultT> = (
+  source:SourceT, args:{[argName: string]: mixed},
+  context:mixed, info:infoT) => ResultT;
 
 function any_caster<T>(v:T):any {
   return v;
@@ -20,14 +21,14 @@ function check<SourceT, ArgsT, CxtT, infoT>(
   resolverToCheck:(
     source:SourceT, args:ArgsT,
     context:CxtT, info:infoT
-  ) => mixed
-):GraphQLResolver<infoT> {
+  ) => *
+):GraphQLResolver<SourceT, infoT, *> {
   return graphqlResolver;
 
   function graphqlResolver(
       _source:mixed, _args:{[key:string]:mixed},
       _context:mixed, _info:infoT
-    ):mixed {
+    ):* {
 
     try {
       const source = sourceCaster?sourceCaster(_source):any_caster(_source);
@@ -52,14 +53,14 @@ function sourceCheck<SourceT, infoT>(
   resolverToCheck:(
     source:SourceT, args:{[key:string]:mixed},
     context:mixed, info:infoT
-  ) => mixed
-):GraphQLResolver<infoT> {
+  ) => *
+):GraphQLResolver<SourceT, infoT, *> {
   return graphqlResolver;
 
   function graphqlResolver(
-    _source:mixed, _args:{[key:string]:mixed},
+    _source:SourceT, _args:{[key:string]:mixed},
     _context:mixed, _info:infoT
-  ):mixed {
+  ):* {
     try {
       const source = sourceCaster(_source);
       return resolverToCheck(source, _args, _context, _info);
@@ -72,19 +73,19 @@ function sourceCheck<SourceT, infoT>(
 }
 
 // args Check Only
-function argsCheck<ArgsT, infoT>(
+function argsCheck<SourceT, ArgsT, infoT>(
   argsCaster: TypeCaster<ArgsT>,
   resolverToCheck:(
-    source:mixed, args:ArgsT,
+    source:SourceT, args:ArgsT,
     context:mixed, info:infoT
-  ) => mixed
-):GraphQLResolver<infoT> {
+  ) => *,
+):GraphQLResolver<SourceT, infoT, *> {
   return graphqlResolver;
 
   function graphqlResolver(
-    _source:mixed, _args:{[key:string]:mixed},
+    _source:SourceT, _args:{[key:string]:mixed},
     _context:mixed, _info:infoT
-  ):mixed {
+  ):* {
     try {
       const args = argsCaster(_args);
       return resolverToCheck(_source, args, _context, _info);
@@ -105,14 +106,14 @@ function complexCheck<SourceT, ArgsT, CxtT, infoT>(
   resolverToCheck:(
     source:SourceT, args:ArgsT,
     context:CxtT, info:infoT
-  ) => mixed
-):GraphQLResolver<infoT> {
+  ) => *
+):GraphQLResolver<SourceT, infoT, *> {
   return graphqlResolver;
 
   function graphqlResolver(
-      _source:mixed, _args:{[key:string]:mixed},
+      _source:SourceT, _args:{[key:string]:mixed},
       _context:mixed, _info:infoT
-    ):mixed {
+    ):* {
     try {
       const source = sourceCaster?
         sourceCaster(_source, _args, _context):
@@ -142,6 +143,8 @@ const dev = {
   complexCheck
 };
 // if no dev, just return the resolverToCheck,do not check.
+// in dev explicitly use `any` type to indicate
+// there is no dynamic dev.check in non-dev environment
 if (process.env.NODE_ENV != 'dev') {
   dev.check = function(
     sourceCaster:any,
@@ -150,8 +153,8 @@ if (process.env.NODE_ENV != 'dev') {
     resolverToCheck:(
       source:any, args:any,
       context:any, info:any
-    ) => mixed
-  ):GraphQLResolver<any> {
+    ) => any
+  ):GraphQLResolver<any, any, any> {
     return (resolverToCheck:any);
   };
   dev.sourceCheck = function(
@@ -159,8 +162,8 @@ if (process.env.NODE_ENV != 'dev') {
     resolverToCheck:(
       source:any, args:any,
       context:any, info:any
-    ) => mixed
-  ):GraphQLResolver<any> {
+    ) => any
+  ):GraphQLResolver<any, any, any> {
     return (resolverToCheck:any);
   };
   dev.argsCheck = function(
@@ -168,8 +171,8 @@ if (process.env.NODE_ENV != 'dev') {
     resolverToCheck:(
       source:any, args:any,
       context:any, info:any
-    ) => mixed
-  ):GraphQLResolver<any> {
+    ) => any
+  ):GraphQLResolver<any, any, any> {
     return (resolverToCheck:any);
   };
   dev.complexCheck = dev.check;
