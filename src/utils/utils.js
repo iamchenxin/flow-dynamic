@@ -34,8 +34,13 @@ function testRange(v:number, range:Range):boolean {
   }
 }
 
+function clip(v:number, range:Range, _default:number):number {
+  return testRange(v, range)? v: _default;
+}
+
 export {
-  testRange
+  testRange,
+  clip
 };
 
 export type {
