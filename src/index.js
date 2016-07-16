@@ -5,7 +5,7 @@
 import {
   pro as pro_val,
   dev as dev_val,
-  cvt
+  cvt as cvt_val
 } from './validator/index.js';
 
 export type {
@@ -23,6 +23,8 @@ import {
   dev as dev_std
 } from './checker/standard.js';
 
+import * as utils from './utils/utils.js';
+
 const pro = {
   ...pro_val,
   ...pro_gra,
@@ -35,8 +37,13 @@ const dev = {
   ...dev_std
 };
 
+const cvt = {
+  ...cvt_val,
+};
+
 export {
   pro,
   cvt,
-  dev
+  dev,
+  utils
 };

@@ -8,10 +8,11 @@ import {
   isEmail
 } from './isEmail.js';
 
-function isString(v:mixed):string {
+function isString(v:mixed, eMsg?: string):string {
   if (typeof v !== 'string') {
     // flow need in function throw to resolve Type.
-    throw new RunTimeCheckE(`value:(${ePrint(v)}) should be string.`);
+    const msg = eMsg?eMsg:`value:(${ePrint(v)}) should be string.`;
+    throw new RunTimeCheckE(msg);
   }
   return v;
 }

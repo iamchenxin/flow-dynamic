@@ -47,4 +47,14 @@ describe('test undefable()', () => {
       }).toThrow(new RunTimeCheckE(`value:(${ePrint(v)}) should be string.`));
     });
   });
+
+  describe('undefableFn will transfer eMsg to downstream ', () => {
+    const undefableString = undefable(isString);
+    it('test with isString', () => {
+      const v:mixed = null;
+      expect(() => {
+        undefableString(v, 'Must be String');
+      }).toThrow(new RunTimeCheckE('Must be String'));
+    });
+  });
 });
