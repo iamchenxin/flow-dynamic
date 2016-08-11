@@ -8,12 +8,6 @@ import {
   cvt as cvt_val
 } from './validator/index.js';
 
-export type {
-  NumberRange,
-  InRangeFn,
-  ClipFn
-} from './validator/index.js';
-
 import {
   pro as pro_gra,
   dev as dev_gra
@@ -47,3 +41,19 @@ export {
   dev,
   utils
 };
+
+// export type
+export type {
+  Range
+} from './utils/utils.js';
+
+export type {
+  NumberRange,
+  InRangeFn,
+  ClipFn
+} from './validator/index.js';
+
+export type {
+  TypeCaster,
+  ComplexCaster
+} from './definition/def.js';
