@@ -6,8 +6,25 @@ import {RunTimeCheckE, ePrint} from '../../definition/def.js';
 import {testRange} from '../../utils/utils.js';
 import type {Range} from '../../utils/utils.js';
 
+// return a function length(), test the array length
+type LengthCompare = (length:number) => boolean;
+
+function mk_isLength<T>(arrFn:(v:any)=>Array<T>):
+(v:mixed, compare:LengthCompare) => Array<T> {
+  return lengthFn;
+  function lengthFn(_v:mixed, compare:LengthCompare):Array<T> {
+    const arr = arrFn(_v);
+    if ( compare(arr.length) ) {
+      return arr;
+    } else {
+      throw new RunTimeCheckE(`Array(${ePrint(_v)})length(${arr.length}), ` +
+      'is out of range.');
+    }
+  }
+}
+
 // return a function inLength()
-function mk_length<T>(arrFn:(v:any)=>Array<T>)
+function mk_inLength<T>(arrFn:(v:any)=>Array<T>)
 :(v:mixed, range:Range)=>Array<T> {
   return inLength;
   function inLength(_v:mixed, range:Range):Array<T> {
@@ -22,7 +39,7 @@ function mk_length<T>(arrFn:(v:any)=>Array<T>)
   }
 }
 
-function mk_length_3args<T>(arrFn:(v:any, _class:Class<T>)=>Array<T>)
+function mk_inLength_3args<T>(arrFn:(v:any, _class:Class<T>)=>Array<T>)
 :(_v:mixed, _class:Class<T>, range:Range) => Array<T> {
   return inLength;
   function inLength(_v:mixed, _class:Class<T>, range:Range)
@@ -39,6 +56,7 @@ function mk_length_3args<T>(arrFn:(v:any, _class:Class<T>)=>Array<T>)
 }
 
 export {
-  mk_length,
-  mk_length_3args
+  mk_isLength,
+  mk_inLength,
+  mk_inLength_3args
 };

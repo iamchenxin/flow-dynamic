@@ -3,12 +3,11 @@
 */
 
 import {RunTimeCheckE, ePrint} from '../../definition/def.js';
-import { mk_length } from './length.js';
+import { mk_inLength, mk_isLength } from './length.js';
 import {
   isNumArr,
   isStrArr,
-  isArrOf,
-  dev as taDev
+  isArrOf
 } from './typedarray.js';
 
 function isArray(v:mixed):Array<mixed> {
@@ -19,20 +18,14 @@ function isArray(v:mixed):Array<mixed> {
   throw new RunTimeCheckE(`value:(${ePrint(v)}) is not a Array.`);
 }
 
-isArray.inLength = mk_length(isArray);
+isArray.inLength = mk_inLength(isArray);
+isArray.isLength = mk_isLength(isArray);
 
 isArray.isNumArr = isNumArr;
 isArray.isStrArr = isStrArr;
 isArray.isArrOf = isArrOf;
 
-const dev = {
-  isArray:(v:any):any => v
-};
-dev.isArray.isNumArr = taDev.isNumArr;
-dev.isArray.isStrArr = taDev.isStrArr;
-dev.isArray.isArrOf = taDev.isArrOf;
 
 export {
   isArray,
-  dev
 };

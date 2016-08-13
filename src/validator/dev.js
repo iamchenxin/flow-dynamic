@@ -38,9 +38,12 @@ dev.isArray.isNumArr = (v:any):any => v;
 dev.isArray.isStrArr = (v:any):any => v;
 dev.isArray.isArrOf = (v:any, c:any):any => v;
 dev.isArray.inLength = (v:any, c:any):any => v;
+dev.isArray.isLength = (v:any, c:any):any => v;
 dev.isArray.isNumArr.inLength = (v:any, c:any):any => v;
 dev.isArray.isStrArr.inLength = (v:any, c:any):any => v;
 dev.isArray.isArrOf.inLength = (v:any, c:any):any => v;
+dev.isArray.isNumArr.isLength = (v:any, c:any):any => v;
+dev.isArray.isStrArr.isLength = (v:any, c:any):any => v;
 
 dev.isObject.isMapOf = (v:any):any => v;
 dev.isObject.isStringMap = (v:any):any => v;

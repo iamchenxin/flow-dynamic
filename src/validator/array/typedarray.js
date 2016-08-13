@@ -4,8 +4,9 @@
 
 import {RunTimeCheckE, ePrint} from '../../definition/def.js';
 import {
-  mk_length,
-  mk_length_3args
+  mk_isLength,
+  mk_inLength,
+  mk_inLength_3args
 } from './length.js';
 
 function isNumArr(v:mixed):Array<number> {
@@ -48,25 +49,16 @@ function isArrOf<T>(v:mixed, _class:Class<T>):Array<T> {
   throw new RunTimeCheckE(`value:(${ePrint(v)}) is not a Array.`);
 }
 
-isNumArr.inLength = mk_length(isNumArr);
-isStrArr.inLength = mk_length(isStrArr);
-isArrOf.inLength = mk_length_3args(isArrOf);
+isNumArr.inLength = mk_inLength(isNumArr);
+isStrArr.inLength = mk_inLength(isStrArr);
+isArrOf.inLength = mk_inLength_3args(isArrOf);
 
-const _copy1 = (v:any):any => v;
-const dev = {
-  isNumArr : _copy1,
-  isStrArr : _copy1,
-  isArrOf : (v:any, c:any):any => v
-};
+isNumArr.isLength = mk_isLength(isNumArr);
+isStrArr.isLength = mk_isLength(isStrArr);
 
-const _copy2 = (v:any):any => v;
-dev.isNumArr.inLength = _copy2;
-dev.isStrArr.inLength = _copy2;
-dev.isArrOf.inLength = _copy2;
 
 export {
   isNumArr,
   isStrArr,
-  isArrOf,
-  dev
+  isArrOf
 };
