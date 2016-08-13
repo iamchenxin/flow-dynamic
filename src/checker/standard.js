@@ -33,9 +33,10 @@ function check1<Arg1, RT>(
       const arg1 = caster1?caster1(_arg1):any_caster(_arg1);
       return oriFn(arg1);
     } catch (e) {
-      let msg = `\n${e}\n` +
-        `Arg1:\n${ePrint(_arg1)}\n`;
-      throw new RunTimeCheckE(msg);
+      throw e; // just rethrow
+//      let msg = `\n${e}\n` +
+//        `Arg1:\n${ePrint(_arg1)}\n`;
+//      throw new RunTimeCheckE(msg);
     }
   }
 }

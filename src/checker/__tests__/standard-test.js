@@ -29,13 +29,10 @@ describe('test check1()', () => {
       return arg1.id + 'ok';
     });
     const data = {idd: 'tom'};
-    const strE =
-      new RunTimeCheckE(`value:(${ePrint(data.id)}) should be string.`);
-    const eMsg = `\n${strE}\n` +
-      `Arg1:\n${ePrint(data)}\n`;
+    const eMsg = `value:(${ePrint(data.id)}) should be string.`;
     expect(() => {
       apiFn(data); // should be {id: string}
-    }).toThrow(new RunTimeCheckE(eMsg));
+    }).toThrowError(RunTimeCheckE, eMsg);
   });
 
   it('will exeute oriFn when check passed', function() {
