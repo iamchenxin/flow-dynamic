@@ -10,12 +10,13 @@ import {
   isArrOf
 } from './typedarray.js';
 
-function isArray(v:mixed):Array<mixed> {
+function isArray(v:mixed, eMsg?:string):Array<mixed> {
   if (Array.isArray(v)) {
     const arr:Array<mixed> = v;
     return arr;
   }
-  throw new RunTimeCheckE(`value:(${ePrint(v)}) is not a Array.`);
+  const msg = eMsg?eMsg:`value:(${ePrint(v)}) is not a Array.`;
+  throw new RunTimeCheckE(msg);
 }
 
 isArray.inLength = mk_inLength(isArray);

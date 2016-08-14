@@ -46,5 +46,12 @@ describe('test nullable()', () => {
         nullableString(v);
       }).toThrow(new RunTimeCheckE(`value:(${ePrint(v)}) should be string.`));
     });
+
+    it('nullableString will pass though custom eMsg', function() {
+      const v:mixed = 1;
+      expect(() => {
+        nullableString(v, 'something');
+      }).toThrow(new RunTimeCheckE('something'));
+    });
   });
 });
