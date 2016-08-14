@@ -12,9 +12,11 @@ function isNull(v:mixed):null {
   throw new RunTimeCheckE(`value:(${ePrint(v)}) should be null.`);
 }
 
-type NullableCaster<T> = (v:any, eMsg?: string) => ?T;
+// must use null|T, ?T will be explain to null|void|T
+// is this a Flow bug?
+type NullableCaster<T> = (v:any, eMsg?: string) => null|T;
 function nullable<T>(f: TypeCaster<T>): NullableCaster<T> {
-  return function(v:mixed, eMsg?: string):?T {
+  return function(v:mixed, eMsg?: string): null|T {
     if (v===null) {return null;}
     return f(v, eMsg);
   };

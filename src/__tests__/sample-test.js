@@ -12,7 +12,8 @@ jest.unmock('../index.js');
 
 import {
   pro,
-  dev
+  dev,
+//  cvt
 } from '../index.js';
 
 const {
@@ -34,6 +35,12 @@ type GraphQLResolveInfo = {
 };
 
 const GraphQLID = 'GraphQLID';
+
+export function aFlowBug() {
+  const nullableArray = pro.nullable(pro.isArray);
+  const vv:null|Array<any> = nullableArray('');
+  return vv;
+}
 
 describe('Basic usage for graphql', () => {
 
