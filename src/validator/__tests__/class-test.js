@@ -46,8 +46,16 @@ describe('test isInstanceof()', () => {
     const typeArg = {v:'test'};
     expect(() => {
       isInstanceof(a, typeArg);
-    }).toThrow(new RunTimeCheckE(
-      `The Type(${ePrint(typeArg)}) you passed in is not a class!`));
+    }).toThrowError(RunTimeCheckE,
+      `The Type(${ePrint(typeArg)}) you passed in is not a class!`);
+  });
+
+  it('will pass though custom eMsg', () => {
+    const a:mixed = new A();
+    const typeArg = {v:'test'};
+    expect(() => {
+      isInstanceof(a, typeArg, 'something');
+    }).toThrowError(RunTimeCheckE, 'something');
   });
 
 });

@@ -22,4 +22,11 @@ describe('test isBoolean()', () => {
     v = false;
     expect(isBoolean(v)).toEqual(v);
   });
+
+  it('will pass though custom eMsg', function() {
+    const v:mixed = null;
+    expect(() => {
+      isBoolean(v, 'something');
+    }).toThrow(new RunTimeCheckE('something'));
+  });
 });
