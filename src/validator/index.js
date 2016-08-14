@@ -7,6 +7,7 @@ import * as _class from './class.js';
 import * as _object from './object/object.js';
 import * as _null from './null.js';
 import * as undef from './undef.js';
+import * as undefNull from './undefnull.js';
 import * as union from './union.js';
 import * as number from './number/number.js';
 import * as _array from './array/array.js';
@@ -34,7 +35,9 @@ const pro = {
 };
 
 const cvt = {
-  isNumber:number.cvt
+  isNumber:number.cvt,
+  isUndefNull: undefNull.isUndefNull,
+  undefNullable: undefNull.undefNullable,
 };
 let dev = pro;
 if (process.env.NODE_ENV != 'dev') {
