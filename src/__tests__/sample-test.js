@@ -18,7 +18,8 @@ import {
 
 const {
   isString,
-  argsCheck
+  argsCheck,
+  isArray,
 } = pro;
 
 import {RunTimeCheckE, ePrint} from '../definition/def.js';
@@ -128,5 +129,31 @@ describe('Basic usage for graphql', () => {
       {},
       {test: '!hello'}
     )).toEqual('undefined!hello');// when use dev, will not check at product time
+  });
+});
+
+describe('new feature', () => {
+  describe('isObjArr', () => {
+    const arr_valid = v => ({
+      a: isArray.isObjArr(v.a, 'eee'),
+    });
+
+    it('will throw', () => {
+      const data = {
+        a: [1, {n:1}]
+      };
+      expect(() => {
+        const rt:{a:Array<Object>} = arr_valid(data);
+        return rt;
+      }).toThrowError(RunTimeCheckE, 'eee');
+    });
+
+    it('will pass', () => {
+      const data = {
+        a: [{}, {n:1}]
+      };
+      expect(arr_valid(data))
+        .toEqual(data);
+    });
   });
 });

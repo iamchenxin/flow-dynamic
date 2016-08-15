@@ -7,7 +7,8 @@ import { mk_inLength, mk_isLength } from './length.js';
 import {
   isNumArr,
   isStrArr,
-  isArrOf
+  isArrOf,
+  isObjArr,
 } from './typedarray.js';
 
 function isArray(v:mixed, eMsg?:string):Array<mixed> {
@@ -24,8 +25,8 @@ isArray.isLength = mk_isLength(isArray);
 
 isArray.isNumArr = isNumArr;
 isArray.isStrArr = isStrArr;
+isArray.isObjArr = isObjArr;
 isArray.isArrOf = isArrOf;
-
 
 export {
   isArray,
