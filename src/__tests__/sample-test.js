@@ -20,6 +20,7 @@ const {
   isString,
   argsCheck,
   isArray,
+  isNumber,
 } = pro;
 
 import {RunTimeCheckE, ePrint} from '../definition/def.js';
@@ -154,6 +155,28 @@ describe('new feature', () => {
       };
       expect(arr_valid(data))
         .toEqual(data);
+    });
+  });
+
+  describe('direct cast', () => {
+    const undata = [1, ['aaa', 'bbb']];
+    it('will throw', () => {
+      expect(() => {
+        const d:[string, Array<string>] = pro.cast(undata, v => ([
+          isString(v[0], 'string'),
+          isArray.isStrArr(v[1], 'string[]'),
+        ]));
+        return d;
+      }).toThrowError(RunTimeCheckE, 'string');
+    });
+
+    it('will pass', () => {
+      const d:[number, Array<string>] = pro.cast(undata, v => ([
+        isNumber(v[0], 'number'),
+        isArray.isStrArr(v[1], 'string[]'),
+      ]));
+      expect(d)
+        .toEqual(undata);
     });
   });
 });

@@ -16,21 +16,28 @@ import {
   pro as pro_std,
   dev as dev_std
 } from './checker/standard.js';
+import {
+  pro as pro_cast,
+  dev as dev_cast
+} from './checker/directcast.js';
 
 import * as utils from './utils/utils.js';
 
 const pro = {
   ...pro_val,
   ...pro_gra,
-  ...pro_std
+  ...pro_std,
+  ...pro_cast,
 };
 
 const dev = {
   ...dev_val,
   ...dev_gra,
-  ...dev_std
+  ...dev_std,
+  ...dev_cast,
 };
 
+// ToDo: should make dev checker can not use cvt
 const cvt = {
   ...cvt_val,
 };
