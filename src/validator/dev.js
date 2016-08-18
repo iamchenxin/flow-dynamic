@@ -13,6 +13,7 @@ const dev = {
   undefable:returnCopy,
   union:returnCopy,
   isLiteral:(v:any, t:any):any => v,
+  isEnum:(v:any, t:any):any => v,
 
   isNumber:(v:any):any => v,
 

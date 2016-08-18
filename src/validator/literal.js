@@ -3,6 +3,7 @@
 */
 
 import {RunTimeCheckE, ePrint} from '../definition/def.js';
+//import type {TypeCaster} from '../definition/def.js';
 
 function isLiteral<LIT1>(v:any, lit1:LIT1, eMsg?:string):LIT1 {
   if (v === lit1) {
@@ -79,5 +80,5 @@ isLiteral.T4 = isLiteral4;
 isLiteral.T5 = isLiteral5;
 
 export {
-  isLiteral
+  isLiteral,
 };

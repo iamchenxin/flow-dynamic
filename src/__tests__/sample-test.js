@@ -22,6 +22,7 @@ const {
   isArray,
   isNumber,
   maybe,
+  isEnum,
 } = pro;
 
 import {RunTimeCheckE, ePrint} from '../definition/def.js';
@@ -186,6 +187,34 @@ describe('new feature', () => {
       const d: string = 'aaa';
       const v: ?string = pro.cast(d, un => maybe(isString)(un) );
       expect(v).toEqual(d);
+    });
+  });
+
+  describe('isEnum', () => {
+    const em = {
+      aaa:'aaa',
+      bbb:'bbb',
+      ccc:'ccc'
+    };
+    it('isEnum', () => {
+      const d = 'aaa';
+      const v = isEnum(d, em);
+  //    const e:$Keys<typeof em> = v;
+      expect(v).toEqual(d);
+    });
+
+    it('e.hasOwnProperty will make $Keys have .hasOwnProperty', () => {
+
+    //  type EM_KEYS = $Keys<typeof em>;
+    //  const c1:EM_KEYS = '.hasOwnProperty'; // this will fail
+      function ts(k: string, e: typeof em): boolean { // when define a function among the code
+        return e.hasOwnProperty(k);
+      }
+      // Seems e.hasOwnProperty makes .hasOwnProperty be considered as a key of em.
+  //    const c2:EM_KEYS = '.hasOwnProperty'; // this will pass
+      const d = 'aaa';
+      expect(ts(d, em)).toEqual(true);
+//      return c;
     });
   });
 });
