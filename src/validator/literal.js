@@ -74,10 +74,30 @@ eMsg?:string):LIT1|LIT2|LIT3|LIT4|LIT5 {
   throw new RunTimeCheckE(msg);
 }
 
+// Flow will use T as union type to collect type information for t1,t2,t3 ...
+// so T will be a typeof t1|t2|t3 ... 
+function isLiteral6<T: string>(v:any, t1:T, t2:T, t3:T, t4:T, t5:T, t6:T,
+eMsg?:string):T {
+  if ( (v === t1) ||
+    (v === t2) ||
+    (v === t3) ||
+    (v === t4) ||
+    (v === t5) ||
+    (v === t6)
+  ) {
+    return v;
+  }
+  const msg = eMsg?eMsg:`value:(${ePrint(v)}) is not` +
+  ` a literal( ${ePrint(t1)} | ${ePrint(t2)} | ${ePrint(t3)}` +
+  ` | ${ePrint(t4)} | ${ePrint(t5)} | ${ePrint(t6)} ).`;
+  throw new RunTimeCheckE(msg);
+}
+
 isLiteral.T2 = isLiteral2;
 isLiteral.T3 = isLiteral3;
 isLiteral.T4 = isLiteral4;
 isLiteral.T5 = isLiteral5;
+isLiteral.T6 = isLiteral6;
 
 export {
   isLiteral,

@@ -27,6 +27,7 @@ dev.isLiteral.T2 = (v:any, t:any):any => v;
 dev.isLiteral.T3 = (v:any, t:any):any => v;
 dev.isLiteral.T4 = (v:any, t:any):any => v;
 dev.isLiteral.T5 = (v:any, t:any):any => v;
+dev.isLiteral.T6 = (v:any, t:any):any => v;
 
 dev.isNumber.inRange = _copy_lv2;
 dev.isNumber.isInt = _copy_lv2;

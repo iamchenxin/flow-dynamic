@@ -23,6 +23,7 @@ const {
   isNumber,
   maybe,
   isEnum,
+  isLiteral,
 } = pro;
 
 import {RunTimeCheckE, ePrint} from '../definition/def.js';
@@ -215,6 +216,15 @@ describe('new feature', () => {
       const d = 'aaa';
       expect(ts(d, em)).toEqual(true);
 //      return c;
+    });
+  });
+
+  describe('isLiteral6', () => {
+    it('isLiteral6', () => {
+      const d: string = 'aaa';
+      type LIT = 'aaa'|'b'|'c'|'d'|'e'|'f';
+      const v: LIT = isLiteral.T6(d, 'aaa', 'b', 'c', 'd', 'e', 'f');
+      expect(v).toEqual(d);
     });
   });
 });
