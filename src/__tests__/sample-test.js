@@ -21,6 +21,7 @@ const {
   argsCheck,
   isArray,
   isNumber,
+  maybe,
 } = pro;
 
 import {RunTimeCheckE, ePrint} from '../definition/def.js';
@@ -177,6 +178,14 @@ describe('new feature', () => {
       ]));
       expect(d)
         .toEqual(undata);
+    });
+  });
+
+  describe('maybe', () => {
+    it('cast string to ?string', () => {
+      const d: string = 'aaa';
+      const v: ?string = pro.cast(d, un => maybe(isString)(un) );
+      expect(v).toEqual(d);
     });
   });
 });
