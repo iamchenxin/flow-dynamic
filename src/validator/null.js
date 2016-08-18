@@ -5,11 +5,12 @@
 import {RunTimeCheckE, ePrint} from '../definition/def.js';
 import type {TypeCaster} from '../definition/def.js';
 
-function isNull(v:mixed):null {
+function isNull(v:mixed, eMsg?: string):null {
   if (v === null) {
     return null;
   }
-  throw new RunTimeCheckE(`value:(${ePrint(v)}) should be null.`);
+  const msg = eMsg?eMsg:`value:(${ePrint(v)}) should be null.`;
+  throw new RunTimeCheckE(msg);
 }
 
 // This maybe useless, cause `: ?T` is maybe type , ?: T is void type.
