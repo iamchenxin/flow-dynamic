@@ -7,6 +7,8 @@ const dev = {
   isInstanceof:(v:any):any => v,
   isNull:(v:any):any => v,
   nullable:returnCopy,
+  isMaybe:(v:any):any => v,
+  maybe:returnCopy,
   isUndef:(v:any):any => v,
   undefable:returnCopy,
   union:returnCopy,

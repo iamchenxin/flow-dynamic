@@ -26,7 +26,7 @@ describe('test isNull()', () => {
 
 describe('test nullable()', () => {
   describe('nullable(isString) will return a Function ' +
-  'nullableString(v:mixed)=>?string', () => {
+  'nullableString(v:mixed)=>null|string', () => {
     const nullableString = nullable(isString);
     it('nullableString will return null when the value is null',
     function() {

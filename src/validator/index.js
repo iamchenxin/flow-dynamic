@@ -6,6 +6,7 @@ import * as boolean from './boolean.js';
 import * as _class from './class.js';
 import * as _object from './object/object.js';
 import * as _null from './null.js';
+import * as maybe from './maybe.js';
 import * as undef from './undef.js';
 import * as undefNull from './undefnull.js';
 import * as union from './union.js';
@@ -22,6 +23,8 @@ const pro = {
   isInstanceof:_class.isInstanceof,
   isNull:_null.isNull,
   nullable:_null.nullable,
+  isMaybe: maybe.isMaybe,
+  maybe: maybe.maybe,
   isUndef:undef.isUndef,
   undefable:undef.undefable,
   union:union.union,
