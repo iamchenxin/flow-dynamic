@@ -27,8 +27,9 @@ function isNumArr(_v:mixed, eMsg?: string):Array<number> {
 }
 
 
-function isStrArr(v:mixed, eMsg?: string):Array<string> {
-  if (Array.isArray(v)) {
+function isStrArr(_v:mixed, eMsg?: string):Array<string> {
+  if (Array.isArray(_v)) {
+    const v: Array<any> = _v;
     for ( const ele of v ) {
       if (typeof ele !== 'string') {
         const msg = eMsg?eMsg:`value:(${ePrint(v)}) is not a string[].`;
@@ -38,12 +39,13 @@ function isStrArr(v:mixed, eMsg?: string):Array<string> {
     const arr:Array<string> = v;
     return arr;
   }
-  const msg = eMsg?eMsg:`value:(${ePrint(v)}) is not a Array.`;
+  const msg = eMsg?eMsg:`value:(${ePrint(_v)}) is not a Array.`;
   throw new RunTimeCheckE(msg);
 }
 
-function isArrOf<T>(v:mixed, _class:Class<T>):Array<T> {
-  if (Array.isArray(v)) {
+function isArrOf<T>(_v:mixed, _class:Class<T>):Array<T> {
+  if (Array.isArray(_v)) {
+    const v: Array<any> = _v;
     for ( const ele of v ) {
       if ( (ele instanceof _class)!==true ) {
         throw new RunTimeCheckE(`value:(${ePrint(v)}) is not a _class[].`);
@@ -52,11 +54,12 @@ function isArrOf<T>(v:mixed, _class:Class<T>):Array<T> {
     const arr:Array<T> = v;
     return arr;
   }
-  throw new RunTimeCheckE(`value:(${ePrint(v)}) is not a Array.`);
+  throw new RunTimeCheckE(`value:(${ePrint(_v)}) is not a Array.`);
 }
 
-function isObjArr(v:mixed, eMsg?: string):Array<Object> {
-  if (Array.isArray(v)) {
+function isObjArr(_v:mixed, eMsg?: string):Array<Object> {
+  if (Array.isArray(_v)) {
+    const v: Array<any> = _v;
     for ( const ele of v ) {
       if (typeof ele !== 'object') {
         const msg = eMsg?eMsg:`value:(${ePrint(v)}) is not a Object[].`;
@@ -66,7 +69,7 @@ function isObjArr(v:mixed, eMsg?: string):Array<Object> {
     const arr:Array<Object> = v;
     return arr;
   }
-  const msg = eMsg?eMsg:`value:(${ePrint(v)}) is not a Array.`;
+  const msg = eMsg?eMsg:`value:(${ePrint(_v)}) is not a Array.`;
   throw new RunTimeCheckE(msg);
 }
 
