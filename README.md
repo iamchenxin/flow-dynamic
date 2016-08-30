@@ -1,8 +1,5 @@
 ## Flow-Dynamic
-A helper library to link runtime type check to static flow check.
-
-## My English is poor
-Feel free to correct my words,or rewrite sentences,really appreciate it.
+Dynamic type check library which will generate corresponding static Flow Type.
 
 ## For quick start
 goto [flow-dynamic/wiki](https://github.com/iamchenxin/flow-dynamic/wiki/Home).<br/>
