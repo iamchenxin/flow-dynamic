@@ -32,20 +32,32 @@ describe('test dev tables', () => {
           `sub of pro:\n${ePrint(fnames)}\n` +
           `sub of dev:\n${ePrint(Object.keys(_d))}\n`);
         }
-        const v = 1;
-        const rt = _d[name](v);
-        switch (typeof rt) {
-        case 'function': // it is a function returnCopy():(v:mixed)=>any
-          if ( v !== rt(v) ) {
+        switch (name) {
+          // this two validator return their second arg
+        case 'mustBe':
+        case 'mustNot':
+          const mv = 1;
+          const mrt = _d[name](null, mv);
+          if ( mrt !== mv) {
             throw new Error(`dev(${name}) should just return v`);
           }
           break;
         default:
-          if ( rt !== v) {
-            throw new Error(`dev(${name}) should just return v`);
+          const v = 1;
+          const rt = _d[name](v);
+          switch (typeof rt) {
+          case 'function': // it is a function returnCopy():(v:mixed)=>any
+            if ( v !== rt(v) ) {
+              throw new Error(`dev(${name}) should just return v`);
+            }
+            break;
+          default:
+            if ( rt !== v) {
+              throw new Error(`dev(${name}) should just return v`);
+            }
           }
+          testFunctions(_p[name], _d[name]);
         }
-        testFunctions(_p[name], _d[name]);
       });
     }
   });

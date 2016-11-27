@@ -17,6 +17,7 @@ import type {NumberRange, InRangeFn, ClipFn} from './number/number.js';
 import * as _string from './string/string.js';
 import * as _literal from './literal.js';
 import * as _enum from './enum.js';
+import * as _common from './common.js';
 import {dev as dev_config} from './dev.js';
 
 const pro = {
@@ -36,7 +37,9 @@ const pro = {
 
   isString:_string.isString,
   isArray:_array.isArray,
-  isObject:_object.isObject
+  isObject:_object.isObject,
+  mustBe:_common.mustBe,
+  mustNot:_common.mustNot,
 };
 
 const cvt = {

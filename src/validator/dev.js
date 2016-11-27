@@ -19,7 +19,9 @@ const dev = {
 
   isString:(v:any):any => v,
   isArray:(v:any):any => v,
-  isObject:(v:any):any => v
+  isObject:(v:any):any => v,
+  mustBe:(shouldBe: any, v: any) => v,
+  mustNot:(notBe: any, v: any) => v,
 };
 
 // not sure if one function or inline function will be optimized by js engine
