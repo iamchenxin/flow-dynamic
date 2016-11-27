@@ -1,83 +1,38 @@
+// @flow
 /*eslint-env node */
-var gulp=require('gulp');
-var babel=require('gulp-babel');
-var sourcemaps=require('gulp-sourcemaps');
-var rename = require('gulp-rename');
-var path=require('path');
-//var gutil =require('gulp-util');
-const fbjsConfigure = require('babel-preset-fbjs/configure');
-
+const gulp = require('gulp');
+const gutil = require('gulp-util');
+const path = require('path');
+const { paths } = require('./config/base.js');
+const scripts = require('init-scripts');
+const { utils } = scripts;
 
 gulp.task('lib', function() {
-  return stdGulpTrans('src', 'lib');
+  const babelJson = utils.readRC(paths.babelrc);
+  // src -> lib
+  return scripts.gulpscripts.compileJS(paths.src, paths.dst, babelJson);
 });
 
 gulp.task('flow', function() {
-  return flowType('src', 'lib');
+  return scripts.gulpscripts.outputFlowJS(paths.src, paths.dst);
 });
 
-gulp.task('build', ['lib', 'flow'], function() {
-  return stdGulpTrans('src/common', 'dst/common');
-});
-
-gulp.task('clean', function() {
-  return rmdir([
-    'lib',
+gulp.task('clean', function(done) {
+  utils.rmdir([
+    paths.dst,
     'index.js',
     'index.js.flow',
     'index.js.map',
   ] );
+  done();
 });
 
-// ........functions .......
-function flowType(src, dst) {
-  var srcPath = [src+'/**/*.js',
-    '!'+src+'/**/__tests__/**', '!'+src+'/**/__mocks__/**'];
-  return gulp
-    .src(srcPath)
-    .pipe(rename({extname: '.js.flow'}))
-    .pipe(gulp.dest(dst));
-}
-
-var fs = require('fs');
-function rmdir(pathNames) {
-  pathNames.forEach(function(pathName) {
-    if (!fs.existsSync(pathName)) { return; }
-    const stat = fs.statSync(pathName);
-    if ( stat.isFile()) {
-      rmfile(pathName);
-    }
-    if (stat.isDirectory()) {
-      const subPaths = fs.readdirSync(pathName)
-        .map(function(subPathName) {
-          return path.resolve(pathName, subPathName);
-        });
-      rmdir(subPaths);
-      fs.rmdirSync(pathName);
-    }
-  });
-  function rmfile(name) {
-    fs.unlinkSync(name);
-  }
-}
-
-function stdGulpTrans(src, dst) {
-  var sourceRoot = path.join(__dirname, src);
-  var srcPath = [src+'/**/*.js',
-    '!'+src+'/**/__tests__/**', '!'+src+'/**/__mocks__/**'];
-  return gulp
-    .src(srcPath)
-    .pipe(sourcemaps.init())
-    .pipe(babel({
-      presets: [
-        fbjsConfigure({
-          autoImport: false,
-          target: 'js',
-        }),
-      ],
-    }))
-    .pipe(sourcemaps.write('.', {
-      includeContent: true, sourceRoot: sourceRoot, debug:true
-    }))
-    .pipe(gulp.dest(dst));
-}
+gulp.task('build', gulp.series('clean', gulp.parallel('lib', 'flow'),
+function(done) {
+  const rsrc = path.relative(__dirname, paths.src);
+  const rdst = path.relative(__dirname, paths.dst);
+  gutil.log('Compile Javascript Files...');
+  gutil.log(`From: './${rsrc}' To: './${rdst}'`);
+  done();
+  //gutil.log(`To: './${rdst}'`);
+}));
