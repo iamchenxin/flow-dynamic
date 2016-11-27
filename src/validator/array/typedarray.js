@@ -15,7 +15,7 @@ import {
 function isNumArr(_v:mixed, eMsg?: string):Array<number> {
   // Flow can not infer the Array's inner type here
   // but the style like isStrArr,Flow can infer
-  const v:Array<any> = isArray(v, eMsg);
+  const v:Array<any> = isArray(_v, eMsg);
   for ( const ele of v ) {
     if (typeof ele !== 'number') {
       const msg = eMsg?eMsg:`value:(${ePrint(v)}) is not a number[].`;
