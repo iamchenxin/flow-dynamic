@@ -23,11 +23,25 @@ import {
 
 import * as utils from './utils/utils.js';
 
-const pro = Object.assign({}, pro_val, pro_gra, pro_std, pro_cast);
-const dev = Object.assign({}, dev_val, dev_gra, dev_std, dev_cast);
+const pro = {
+  ...pro_val,
+  ...pro_gra,
+  ...pro_std,
+  ...pro_cast,
+};
+
+const dev = {
+  ...dev_val,
+  ...dev_gra,
+  ...dev_std,
+  ...dev_cast,
+};
 
 // ToDo: should make dev checker can not use cvt
-const cvt = Object.assign({}, cvt_val);
+const cvt = {
+  ...cvt_val,
+};
+
 
 export {
   pro,
